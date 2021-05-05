@@ -3,7 +3,7 @@ import { commerce } from "./lib/commerce"
 // import Products from "./components/Products/Products"
 // import NavBar from "./components/NavBar/Navbar"
 
-import { Products, NavBar } from "./components"
+import { Products, NavBar, Cart } from "./components"
 
 const App = () => {
     const [products, setProducts] = useState([])
@@ -39,7 +39,8 @@ console.log(cart)
     return (
         <div>
             <NavBar totalItems={cart.total_items}/>
-            <Products products ={products} onAddToCart={handleAddToCart }/>
+            {/* <Products products ={products} onAddToCart={handleAddToCart }/> */}
+            <Cart cart={cart}/>
 
         </div>
     )
