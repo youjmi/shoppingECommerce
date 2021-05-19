@@ -4,13 +4,14 @@ import {Paper, Stepper, Step, StepLabel, Typography, CircularProgress,Divider, B
 import useStyles from "./styles"
 import AddressForm from "../AddressForm";
 import PaymentForm from "../PaymentForm";
+import {Link} from "react-router-dom"
 
 import {commerce} from "../../../lib/commerce"
 
 const steps =["Shipping Address", "Payment Details"]
 
 
-const Checkout = ({cart}) => {
+const Checkout = ({cart, order, onCaptureCheckout, error}) => {
     const [activeStep, setActiveStep] =useState(0)
     const [checkoutToken,setCheckoutToken] =useState(null)
     const [shippingData,setShippingData] =useState({})
@@ -43,16 +44,26 @@ const Checkout = ({cart}) => {
         nextStep()
     }
 
-    const Confirmation =() => (
+    const Confirmation =() => order.customer ? (
 
-        <div>
-            CONFIRMATION
+        <>
+            <div>
+                <Typography variant ="h5"> Thank you for your purchase, firstname lastname</Typography>         
+                <Divider className={classes.divider}/>
+                <Typography variant ="subtitle2">Order ref:</Typography>
+                   </div>
+                   <br/>
+                   <Button component = {Link} to ="/" variant="outlined" type="button"> Back to Home</Button>
+        </>
+    ) : (
+        <div className={classes.spinner}>
+            <CircularProgress/>
         </div>
     )
 
     const Form =()=> activeStep ===0
     ?<AddressForm checkoutToken={checkoutToken} next={next} />
-    :<PaymentForm  shippingData={shippingData} checkoutToken={checkoutToken} backStep={backStep}/>
+    :<PaymentForm  shippingData={shippingData} checkoutToken={checkoutToken} nextStep={nextStep} backStep={backStep}  onCaptureCheckout={onCaptureCheckout}/>
 
     return (
         <>
