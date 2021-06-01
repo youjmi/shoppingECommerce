@@ -52,20 +52,21 @@ const AddressForm = ({ checkoutToken, next }) => {
       useEffect(() => {
         if (shippingSubdivision) fetchShippingOptions(checkoutToken.id, shippingCountry, shippingSubdivision);
       }, [shippingSubdivision]);
+      
     
     return (
         <>
             <Typography variant="h6" gutterBottom > Shipping Address</Typography>
             <FormProvider {...methods} >
-                <form onSubmit={methods.handleSubmit((data)=> next(data, shippingCountry, shippingSubdivision,shippingOption))}>
+                <form onSubmit={methods.handleSubmit((data)=> next({...data, shippingCountry, shippingSubdivision,shippingOption}))}>
                     <Grid container spacing={3} >
-                        <FormInput  name="firstName" label="First Name" />
-                        <FormInput  name="lastName" label="Last Name" />
-                        <FormInput  name="address" label="Address" />
-                        <FormInput  name="email" label="Email" />
+                        <FormInput required  name="firstName" label="First Name" />
+                        <FormInput  required name="lastName" label="Last Name" />
+                        <FormInput required name="address" label="Address" />
+                        <FormInput required name="email" label="Email" />
                         {/* <FormInput required name="country" label="Country" /> */}
-                        <FormInput  name="city" label="City" />
-                        <FormInput  name="zip" label="Zip/ Postal Code" />
+                        <FormInput required name="city" label="City" />
+                        <FormInput required name="zip" label="Zip/ Postal Code" />
                         <Grid item xs={12} sm={6}>
                             <InputLabel> Shipping Country</InputLabel>
                             <Select value={shippingCountry} fullWidth
